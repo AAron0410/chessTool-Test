@@ -16,6 +16,7 @@
     #chessboard {
         width: 16vw; /* 在小屏幕上增加棋盘宽度为视口宽度的90% */
         height: 90.4vw; /* 高度同样增加以保持比例 */
+        background-color: red;
     }
 }
 #chessboard2 {
