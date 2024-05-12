@@ -185,20 +185,21 @@ function switchChessboard() {
 function captureAndDownload(boardType) {
     var node = document.getElementById('chessboard'); // 或根据boardType选择不同的棋盘
 
-    domtoimage.toPng(node, {
-        style: {
-            transform: "scale(2)",
-            transformOrigin: 'top left'
-        },
-        quality: 1.0 // 最高质量
+    html2canvas(node, {
+        scale: 2 // 增加到默认值的两倍
     })
-    .then(function (dataUrl) {
-        var link = document.createElement('a');
-        link.download = boardType + '_chessboard.png';
-        link.href = dataUrl;
-        link.click();
+    .then(function (canvas) {
+        canvas.toBlob(function(blob) {
+            var url = URL.createObjectURL(blob);
+            var link = document.createElement('a');
+            link.download = boardType + '_chessboard.png';
+            link.href = url;
+            link.click();
+            URL.revokeObjectURL(url);
+        }, 'image/png');
     })
     .catch(function (error) {
         console.error('图片生成出错', error);
     });
 }
+
