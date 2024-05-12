@@ -183,23 +183,17 @@ function switchChessboard() {
 //document.getElementById('switchButton').addEventListener('click', switchChessboard);
 
 function captureAndDownload(boardType) {
-    var node = document.getElementById('chessboard'); // 或根据boardType选择不同的棋盘
+    var chessboardElement = document.getElementById('chessboard');
 
-    html2canvas(node, {
-        scale: 2 // 增加到默认值的两倍
-    })
-    .then(function (canvas) {
-        canvas.toBlob(function(blob) {
-            var url = URL.createObjectURL(blob);
-            var link = document.createElement('a');
-            link.download = boardType + '_chessboard.png';
-            link.href = url;
-            link.click();
-            URL.revokeObjectURL(url);
-        }, 'image/png');
-    })
-    .catch(function (error) {
-        console.error('图片生成出错', error);
-    });
+    // 延迟执行截图操作，确保背景图加载完成
+    setTimeout(() => {
+        domtoimage.toBlob(chessboardElement)
+            .then(function (blob) {
+                window.saveAs(blob, boardType === 'A' ? 'chessboardA.png' : 'chessboardB.png');
+            })
+            .catch(function (error) {
+                console.error('Oops, something went wrong!', error);
+            });
+    }, 500); // 延迟500毫秒
 }
 
