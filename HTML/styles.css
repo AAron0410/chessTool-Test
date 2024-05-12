@@ -23,7 +23,7 @@ html, body {
 }
 #button-container {
     position: absolute;
-    bottom: 50vh; /* 调整底部距离 */
+    bottom: 48vh; /* 调整底部距离 */
     right: 0;
     width: auto; /* 容器宽度自动调整 */
     display: flex;
